@@ -14,28 +14,8 @@ public class Task {
         this.status = TaskStatus.NEW;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getTaskInfo() {
-        return taskInfo;
-    }
-
-    public void setTaskInfo(String taskInfo) {
-        this.taskInfo = taskInfo;
-    }
-
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public TaskStatus getStatus() {

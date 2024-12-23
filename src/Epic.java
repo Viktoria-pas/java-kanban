@@ -12,9 +12,6 @@ public class Epic extends Task{
         subtasks.add(subtask);
     }
 
-    public ArrayList<Task> getSubtasks(Epic epic) {
-        return subtasks;
-    }
 
 
     @Override
