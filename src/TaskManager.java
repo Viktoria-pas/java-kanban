@@ -11,12 +11,11 @@ public class TaskManager {
 
     public Task createTask(String name, String taskInfo) {
         int id = generateId();
-        Task task = new Task( name, taskInfo, id);
+        Task task = new Task(name, taskInfo, id);
         tasks.put(id, task);
         return task;
     }
 
-    // Создание эпика
     public Epic createEpic(String name, String taskInfo) {
         int id = generateId();
         Epic epic = new Epic( name, taskInfo, id);
@@ -24,16 +23,13 @@ public class TaskManager {
         return epic;
     }
 
-    // Создание подзадачи
+
     public Subtask createSubtask(String name, String taskInfo, Epic epic) {
         int id = generateId();
         Subtask subtask = new Subtask( name, taskInfo, id, epic);
         tasks.put(id, subtask);
         return subtask;
     }
-
-
-
 
     public ArrayList<Task> getAllTasks(){
         ArrayList<Task> allTasks = new ArrayList<>();
@@ -42,8 +38,6 @@ public class TaskManager {
         }
         return allTasks;
     }
-
-
 
     public void clearTasks(){
         tasks.clear();
