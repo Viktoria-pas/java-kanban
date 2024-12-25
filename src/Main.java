@@ -1,61 +1,92 @@
+import ru.yandex.javacource.pasechnyuk.schedule.manager.TaskManager;
+import ru.yandex.javacource.pasechnyuk.schedule.task.Epic;
+import ru.yandex.javacource.pasechnyuk.schedule.task.Subtask;
+import ru.yandex.javacource.pasechnyuk.schedule.task.Task;
+import ru.yandex.javacource.pasechnyuk.schedule.task.TaskStatus;
+
 public class Main {
     public static void main(String[] args) {
 
         TaskManager taskManager = new TaskManager();
 
-        Task task1 = taskManager.createTask("Сделать чай", "Необходимо сделать зеленый чай");
-        Task task2 = taskManager.createTask("Съездить за покупками", "Купить подарки к НГ");
+
+        Task task1 = taskManager.createTask(new Task("Сделать чай", "Необходимо сделать зеленый чай", 1));
+        Task task2 = taskManager.createTask(new Task("Съездить за покупками", "Купить подарки к НГ", 2));
 
 
-        Epic epic1 = taskManager.createEpic("Переезд в новый дом", "Спланировать переезд в новый дом");
-        Subtask subtask1 = taskManager.createSubtask("Упаковка вещи",
-                "Упаковать вещи в коробки, хрупкие вещи в пленку", epic1);
-        Subtask subtask2 = taskManager.createSubtask("Арендовать грузовик для перевозки вещей",
-                "Позвонить в транспортные компании, узнать цены, заказать машину", epic1);
+        Epic epic1 = taskManager.createEpic(new Epic("Переезд в новый дом", "Спланировать переезд в новый дом", 1));
+        Subtask subtask1 = taskManager.createSubtask(new Subtask("Упаковка вещи",
+                "Упаковать вещи в коробки, хрупкие вещи в пленку", 1, epic1.getId()));
+        epic1.addSubtask(subtask1.getId());
+        Subtask subtask2 = taskManager.createSubtask(new Subtask("Арендовать грузовик для перевозки вещей",
+                "Позвонить в транспортные компании, узнать цены, заказать машину", 2, epic1.getId()));
+        epic1.addSubtask(subtask2.getId());
 
-        Epic epic2 = taskManager.createEpic("Приготовить торт", "Приготовить торт по рецепту.");
-        Subtask subtask3 = taskManager.createSubtask("Купить продукты по рецепту",
-                "Сходить за продуктами", epic2);
+        Epic epic2 = taskManager.createEpic(new Epic("Приготовить торт", "Приготовить торт по рецепту.", 2));
+        Subtask subtask3 = taskManager.createSubtask(new Subtask("Купить продукты по рецепту",
+                "Сходить за продуктами", 1, 2));
+        epic2.addSubtask(subtask3.getId());
 
-        System.out.println("Задачи:" + taskManager.getAllTasks());
+        System.out.println("Задачи:" + taskManager.getTasks());
 
-        System.out.println("\nЭпик Переезд в новый дом:" + taskManager.getSubtasksForEpic(epic1));
+        System.out.println("\nЭпики:" + taskManager.getEpics());
 
-        System.out.println("\nЭпик Приготовить торт:" + taskManager.getSubtasksForEpic(epic2) );
+        System.out.println("\nПодзадачи:" + taskManager.getSubtask());
+
+        System.out.println("\nЗадача - Сделать чай :" + taskManager.getTaskById(1));
+
+        System.out.println("\nЭпик - Переезд в новый дом" + taskManager.getEpicById(3));
+
+        System.out.println("\nПодзадача - Упаковка вещи:" + taskManager.getSubtaskById(4));
 
         task1.setStatus(TaskStatus.DONE);
         taskManager.updateTask(task1);
+
         task2.setStatus(TaskStatus.IN_PROGRESS);
         taskManager.updateTask(task2);
 
         subtask1.setStatus(TaskStatus.DONE);
-        taskManager.updateTask(subtask1);
+        taskManager.updateSubtask(subtask1);
+
         subtask2.setStatus(TaskStatus.IN_PROGRESS);
-        taskManager.updateTask(subtask2);
+        taskManager.updateSubtask(subtask2);
+
         subtask3.setStatus(TaskStatus.DONE);
-        taskManager.updateTask(subtask3);
+        taskManager.updateSubtask(subtask3);
 
 
         taskManager.updateEpicStatus(epic1);
         taskManager.updateEpicStatus(epic2);
 
 
-        System.out.println("\nОбновлённые статусы:" + taskManager.getAllTasks());
+        System.out.println("\nОбновлённые статусы задача 1:" + task1.getStatus());
+        System.out.println("\nОбновлённые статусы задача 2:" + task2.getStatus());
 
         System.out.println("\nСтатус эпика Переезд в новый дом: " + epic1.getStatus());
-        System.out.println("Статус эпика Приготовить торт: " + epic2.getStatus());
+        System.out.println("\nСтатус эпика Приготовить торт: " + epic2.getStatus());
+
+        System.out.println("\n" + taskManager.getTaskById(1));
+        System.out.println("\n" + taskManager.getEpicById(3));
+        System.out.println("\n" + taskManager.getSubtaskById(4));
 
         taskManager.removeTaskById(task2.getId());
-        taskManager.removeTaskById(epic2.getId());
+        taskManager.removeEpicById(epic2.getId());
+        taskManager.removeSubtaskById(subtask1.getId());
 
 
-        System.out.println("\nЗадачи после удаления :" + taskManager.getAllTasks());
+        System.out.println("\nЗадачи после удаления :" + taskManager.getTasks());
+        System.out.println("\nЭпики после удаления :" + taskManager.getEpics());
+        System.out.println("\nПодзадачи после удаления :" + taskManager.getSubtask());
 
-        System.out.println("\nПодзадачи после удаления :" + taskManager.getSubtasksForEpic(epic2));
 
-        System.out.println(taskManager.getTaskById(3));
         taskManager.clearTasks();
-        System.out.println(taskManager.getAllTasks());
+        System.out.println(taskManager.getTasks());
+
+        taskManager.clearEpics();
+        System.out.println(taskManager.getEpics());
+
+        taskManager.clearSubtasks();
+        System.out.println(taskManager.getSubtask());
 
     }
 }

@@ -1,11 +1,13 @@
+package ru.yandex.javacource.pasechnyuk.schedule.task;
+
 import java.util.Objects;
 
 public class Task {
 
-   private String name;
-   private String taskInfo;
-   private int id;
-   private TaskStatus status;
+    private String name;
+    private String taskInfo;
+    private int id;
+    private TaskStatus status;
 
     public Task(String name, String taskInfo, int id) {
         this.name = name;
@@ -18,6 +20,10 @@ public class Task {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public TaskStatus getStatus() {
         return status;
     }
@@ -26,13 +32,30 @@ public class Task {
         this.status = status;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTaskInfo() {
+        return taskInfo;
+    }
+
+    public void setTaskInfo(String taskInfo) {
+        this.taskInfo = taskInfo;
+    }
+
+
     @Override
     public String toString() {
         return "Task{" +
                 "name='" + name + '\'' +
                 ", taskInfo='" + taskInfo + '\'' +
                 ", id=" + id +
-                ", statys=" + status +
+                ", status=" + status +
                 '}';
     }
 
