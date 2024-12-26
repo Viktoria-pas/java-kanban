@@ -3,8 +3,8 @@ package ru.yandex.javacource.pasechnyuk.schedule.task;
 public class Subtask extends Task {
     private int epicId;
 
-    public Subtask(String name, String taskInfo, int id, int epicId) {
-        super(name, taskInfo, id);
+    public Subtask(String name, String description, int id, int epicId) {
+        super(name, description, id);
         this.epicId = epicId;
     }
 
@@ -19,7 +19,7 @@ public class Subtask extends Task {
 
     @Override
     public String toString() {
-        return "Subtask{" + "name=" + getName() + ", taskInfo=" + getTaskInfo() + ", id=" + getId() +
+        return "Subtask{" + "name=" + getName() + ", description=" + getDescription() + ", id=" + getId() +
                 ", status=" + getStatus() +
                 ", epicId=" + epicId +
                 '}';

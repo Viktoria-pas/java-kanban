@@ -5,13 +5,13 @@ import java.util.Objects;
 public class Task {
 
     private String name;
-    private String taskInfo;
+    private String description;
     private int id;
     private TaskStatus status;
 
-    public Task(String name, String taskInfo, int id) {
+    public Task(String name, String description, int id) {
         this.name = name;
-        this.taskInfo = taskInfo;
+        this.description = description;
         this.id = id;
         this.status = TaskStatus.NEW;
     }
@@ -40,12 +40,12 @@ public class Task {
         this.name = name;
     }
 
-    public String getTaskInfo() {
-        return taskInfo;
+    public String getDescription() {
+        return description;
     }
 
-    public void setTaskInfo(String taskInfo) {
-        this.taskInfo = taskInfo;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 
@@ -53,7 +53,7 @@ public class Task {
     public String toString() {
         return "Task{" +
                 "name='" + name + '\'' +
-                ", taskInfo='" + taskInfo + '\'' +
+                ", description='" + description + '\'' +
                 ", id=" + id +
                 ", status=" + status +
                 '}';
