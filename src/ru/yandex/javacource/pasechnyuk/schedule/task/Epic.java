@@ -19,7 +19,9 @@ public class Epic extends Task {
     }
 
     public void addSubtaskId(int subtaskId) {
-        subtaskIds.add(subtaskId);
+        if (subtaskId != getId()) {
+            subtaskIds.add(subtaskId);
+        }
     }
 
     public void cleanSubtask() {
@@ -27,9 +29,8 @@ public class Epic extends Task {
     }
 
     public void removeSubtaskId(int id) {
-       subtaskIds.remove((Integer)id);
+        subtaskIds.remove((Integer) id);
     }
-
 
     @Override
     public String toString() {

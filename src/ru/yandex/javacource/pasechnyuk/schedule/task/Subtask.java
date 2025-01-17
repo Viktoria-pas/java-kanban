@@ -16,7 +16,6 @@ public class Subtask extends Task {
         this.epicId = epicId;
     }
 
-
     @Override
     public String toString() {
         return "Subtask{" + "name=" + getName() + ", description=" + getDescription() + ", id=" + getId() +
@@ -24,4 +23,5 @@ public class Subtask extends Task {
                 ", epicId=" + epicId +
                 '}';
     }
+
 }
