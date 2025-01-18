@@ -40,18 +40,17 @@ class InMemoryHistoryManagerTest {
                 "Необходимо сделать зеленый чай", 1));
         inMemoryTaskManager.getTaskById(task1.getId());
 
-        Task originalTask = new Task(task1.getName(), task1.getDescription(), task1.getId());
-        originalTask.setStatus(task1.getStatus());
+        Task originalTask = new Task("Приготовить кофе", "Сварить кофе в турке", 1);
 
-        task1.setDescription("Сделать травяной чай");
-        task1.setStatus(TaskStatus.IN_PROGRESS);
-        inMemoryTaskManager.updateTask(task1);
+        inMemoryTaskManager.createTask(originalTask);
+
+        inMemoryTaskManager.updateTask(originalTask);
 
         Task historyTask = inMemoryTaskManager.getHistory().get(0);
-        assertEquals(originalTask.getName(), historyTask.getName(), "Название задачи в истории изменилось");
-        assertEquals(originalTask.getDescription(), historyTask.getDescription(), "Описание задачи в истории изменилось");
-        assertEquals(originalTask.getStatus(), historyTask.getStatus(), "Статус задачи в истории изменился");
-        assertEquals(originalTask.getId(), historyTask.getId(), "ID задачи в истории изменился");
+        assertEquals(task1.getName(), historyTask.getName(), "Название задачи в истории изменилось");
+        assertEquals(task1.getDescription(), historyTask.getDescription(), "Описание задачи в истории изменилось");
+        assertEquals(task1.getStatus(), historyTask.getStatus(), "Статус задачи в истории изменился");
+        assertEquals(task1.getId(), historyTask.getId(), "ID задачи в истории изменился");
     }
 
 

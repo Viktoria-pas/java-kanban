@@ -25,7 +25,7 @@ public class InMemoryTaskManager implements TaskManager {
         int id = generateId();
         task.setId(id);
         tasks.put(id, task);
-        return task; // можно возвращать саму задачу
+        return task;
     }
 
     @Override
