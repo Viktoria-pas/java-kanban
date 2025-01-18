@@ -7,18 +7,42 @@ import ru.yandex.javacource.pasechnyuk.schedule.task.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface TaskManager<T extends Task> {
-    T createTask(T task);
+public interface TaskManager {
+    Task createTask(Task task);
 
-    ArrayList<T> getTasks(Class<? extends Task> taskType);
+    Epic createEpic(Epic epic);
 
-    void clearTasks(Class<? extends Task> taskType);
+    Subtask createSubtask(Subtask subtask);
 
-    T getTaskById(int id);
+    ArrayList<Task> getTasks();
 
-    void updateTask(T task);
+    ArrayList<Epic> getEpics();
+
+    ArrayList<Subtask> getSubtask();
+
+    void clearTasks();
+
+    void clearEpics();
+
+    void clearSubtasks();
+
+    Task getTaskById(int id);
+
+    Epic getEpicById(int id);
+
+    Subtask getSubtaskById(int id);
+
+    void updateTask(Task task);
+
+    void updateEpic(Epic epic);
+
+    void updateSubtask(Subtask subtask);
 
     void deleteTaskById(int id);
+
+    void deleteEpicById(int id);
+
+    void deleteSubtaskById(int id);
 
     ArrayList<Subtask> getEpicSubtasks(int epicId);
 
@@ -26,7 +50,3 @@ public interface TaskManager<T extends Task> {
 
     List<Task> getHistory();
 }
-
-
-
-

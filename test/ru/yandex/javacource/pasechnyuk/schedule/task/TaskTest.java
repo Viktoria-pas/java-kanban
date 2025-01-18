@@ -4,18 +4,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.yandex.javacource.pasechnyuk.schedule.manager.Managers;
 import ru.yandex.javacource.pasechnyuk.schedule.manager.TaskManager;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class TaskTest {
 
     TaskManager inMemoryTaskManager;
     Task task1;
+
     @BeforeEach
     void setUp() {
         inMemoryTaskManager = Managers.getDefault();
         task1 = inMemoryTaskManager.createTask(new Task("Сделать чай", "Необходимо сделать зеленый чай", 1));
     }
-
 
 
     @Test
@@ -55,8 +56,8 @@ class TaskTest {
 
     @Test
     void cleanTasks() {
-        inMemoryTaskManager.clearTasks(Task.class);
-        assertTrue(inMemoryTaskManager.getTasks(Task.class).isEmpty(), "Список не очистился");
+        inMemoryTaskManager.clearTasks();
+        assertTrue(inMemoryTaskManager.getTasks().isEmpty(), "Список не очистился");
     }
 
     @Test

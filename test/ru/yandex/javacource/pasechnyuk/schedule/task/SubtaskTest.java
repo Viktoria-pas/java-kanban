@@ -16,10 +16,9 @@ class SubtaskTest {
     @BeforeEach
     void setUp() {
         inMemoryTaskManager = Managers.getDefault();
-        epic1 = (Epic) inMemoryTaskManager.createTask(new Epic("Переезд в новый дом",
+        epic1 = inMemoryTaskManager.createEpic(new Epic("Переезд в новый дом",
                 "Спланировать переезд в новый дом", 1));
-        subtask1 = (Subtask) inMemoryTaskManager.createTask(new Subtask("Упаковка вещи",
-
+        subtask1 = inMemoryTaskManager.createSubtask(new Subtask("Упаковка вещи",
                 "Упаковать вещи в коробки, хрупкие вещи в пленку", 5, epic1.getId()));
 
     }
@@ -37,6 +36,14 @@ class SubtaskTest {
     }
 
     @Test
+    void subtaskWasCreated() {
+        Subtask subtask2 = inMemoryTaskManager.createSubtask(new Subtask("Арендовать грузовик",
+                "Позвонить в транспортные компании", 2, epic1.getId()));
+        assertNotNull(inMemoryTaskManager.getSubtask(),
+                "Список подзадач пуст");
+    }
+
+    @Test
     void subtaskAreEqualIfIdsAreEqual() {
         Subtask subtask2 = new Subtask("Арендовать грузовик",
                 "Позвонить в транспортные компании", 2, epic1.getId());
@@ -45,13 +52,13 @@ class SubtaskTest {
 
     @Test
     void getSubtaskById() {
-        assertEquals(subtask1, inMemoryTaskManager.getTaskById(subtask1.getId()),
+        assertEquals(subtask1, inMemoryTaskManager.getSubtaskById(subtask1.getId()),
                 "Подзадачи по данному ID нет");
     }
 
     @Test
     void cleanSubtask() {
-        inMemoryTaskManager.clearTasks(Subtask.class);
+        inMemoryTaskManager.clearSubtasks();
         assertTrue(epic1.getSubtaskIds().isEmpty(),
                 "Список подзадач у эпика не очистился");
     }
@@ -64,32 +71,24 @@ class SubtaskTest {
     }
 
     @Test
-    void deleteSubtaskIfDeleteEpic() {
-        inMemoryTaskManager.deleteTaskById(epic1.getId());
-        assertNull(inMemoryTaskManager.getTaskById(subtask1.getId()),
-                "Подзадачи не были удалены при удалении эпика");
-    }
-
-    @Test
     void changeStatusSubtask() {
         subtask1.setStatus(TaskStatus.IN_PROGRESS);
-        inMemoryTaskManager.updateTask(subtask1);
-
+        inMemoryTaskManager.updateSubtask(subtask1);
         assertEquals(TaskStatus.IN_PROGRESS, subtask1.getStatus(),
                 "Статус подзадачи не обновидся");
     }
 
     @Test
     void epicStatusUpdatesWithSubtasks() {
-        Subtask subtask2 = (Subtask) inMemoryTaskManager.createTask(new Subtask("Арендовать грузовик",
+        Subtask subtask2 = inMemoryTaskManager.createSubtask(new Subtask("Арендовать грузовик",
                 "Позвонить в транспортные компании", 2, epic1.getId()));
 
         assertEquals(TaskStatus.NEW, epic1.getStatus(), "Статус эпика должен быть NEW");
 
         subtask1.setStatus(TaskStatus.DONE);
         subtask2.setStatus(TaskStatus.DONE);
-        inMemoryTaskManager.updateTask(subtask1);
-        inMemoryTaskManager.updateTask(subtask2);
+        inMemoryTaskManager.updateSubtask(subtask1);
+        inMemoryTaskManager.updateSubtask(subtask2);
 
         assertEquals(TaskStatus.DONE, epic1.getStatus(),
                 "Статус эпика не обновился");
@@ -102,7 +101,7 @@ class SubtaskTest {
 
     @Test
     void createSubtaskWithInvalidEpicId() {
-        Subtask subtask3 = (Subtask) inMemoryTaskManager.createTask(new Subtask("Подзадача 3",
+        Subtask subtask3 = inMemoryTaskManager.createSubtask(new Subtask("Подзадача 3",
                 "Тест", 1, 999));
         assertNull(subtask3, "Указан неверный EPIC ID");
     }
@@ -112,7 +111,7 @@ class SubtaskTest {
         Subtask invalidSubtask = new Subtask("Некорректная подзадача",
                 "Попытка сделать её своим же эпиком",
                 1, 1);
-        Subtask result = (Subtask) inMemoryTaskManager.createTask(invalidSubtask);
+        Subtask result = inMemoryTaskManager.createSubtask(invalidSubtask);
 
         assertNull(result, "Подзадача, у которой epicId совпадает с её собственным id, не должна быть создана");
     }
