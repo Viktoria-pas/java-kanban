@@ -1,6 +1,5 @@
 package ru.yandex.javacource.pasechnyuk.schedule.task;
 
-
 import java.util.ArrayList;
 
 public class Epic extends Task {
