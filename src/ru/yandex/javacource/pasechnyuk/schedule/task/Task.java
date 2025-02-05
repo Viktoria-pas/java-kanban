@@ -1,5 +1,7 @@
 package ru.yandex.javacource.pasechnyuk.schedule.task;
 
+import ru.yandex.javacource.pasechnyuk.schedule.manager.InMemoryTaskManager;
+
 import java.util.Objects;
 
 public class Task {
