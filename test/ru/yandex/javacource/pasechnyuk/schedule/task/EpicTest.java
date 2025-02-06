@@ -124,5 +124,19 @@ class EpicTest {
         assertFalse(epic1.getSubtaskIds().contains(epic1.getId()),
                 "Эпик не должен содержать свой собственный ID в списке подзадач");
     }
+    @Test
+    void epicDoesNotHasSubtaskIdWhichWasDeleted() {
+        epic1.removeSubtaskId(subtask1.getId());
+        assertFalse(epic1.getSubtaskIds().contains(subtask1.getId()),
+                "Эпик не должен содержать  ID удаленой подзадачи в списке подзадач");
+    }
+
+    @Test
+    void deletedSubtuskFromEpicIsNotInManager() {
+        epic1.removeSubtaskId(subtask1.getId());
+        Task removedSubtask = inMemoryTaskManager.getTaskById(subtask1.getId());
+        assertNull(removedSubtask);
+
+    }
 
 }

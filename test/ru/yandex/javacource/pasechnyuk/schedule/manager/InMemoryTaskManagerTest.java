@@ -59,72 +59,8 @@ class InMemoryTaskManagerTest {
                     "Статус задачи изменился при добавлении");
         }
 
-    @Test
-    void canNotaddMoreThan10tasksToHistory(){
-        Task task1 = inMemoryTaskManager.createTask(new Task("Сделать чай", "Необходимо сделать зеленый чай", 1));
-        Task task2 = inMemoryTaskManager.createTask(new Task("Съездить за покупками", "Купить подарки к НГ", 2));
-        Task task3 = inMemoryTaskManager.createTask(new Task("Приготовить обед", "Сварить суп", 3));
-        Task task4 = inMemoryTaskManager.createTask(new Task("Съездить на работу", "Забрать бумаги", 4));
-        Task task5 = inMemoryTaskManager.createTask(new Task("Приготовить ужин", "Хаказать доставку", 5));
-        Task task6 = inMemoryTaskManager.createTask(new Task("Постирать белье", "Постирать постельное", 6));
 
 
-        Epic epic1 = inMemoryTaskManager.createEpic(new Epic("Переезд в новый дом", "Спланировать переезд в новый дом", 1));
-        Subtask subtask1 = inMemoryTaskManager.createSubtask(new Subtask("Упаковка вещи",
-                "Упаковать вещи в коробки, хрупкие вещи в пленку", 1, epic1.getId()));
-        Subtask subtask2 =  inMemoryTaskManager.createSubtask(new Subtask("Арендовать грузовик для перевозки вещей",
-                "Позвонить в транспортные компании, узнать цены, заказать машину", 2, epic1.getId()));
-
-        Epic epic2 = inMemoryTaskManager.createEpic(new Epic("Приготовить торт", "Приготовить торт по рецепту.", 2));
-        Subtask subtask3 = inMemoryTaskManager.createSubtask(new Subtask("Купить продукты по рецепту",
-                "Сходить за продуктами", 1, epic2.getId()));
-        inMemoryTaskManager.getTaskById(task1.getId());
-        inMemoryTaskManager.getTaskById(task2.getId());
-        inMemoryTaskManager.getTaskById(task3.getId());
-        inMemoryTaskManager.getTaskById(task4.getId());
-        inMemoryTaskManager.getTaskById(task5.getId());
-        inMemoryTaskManager.getEpicById(epic1.getId());
-        inMemoryTaskManager.getSubtaskById(subtask1.getId());
-        inMemoryTaskManager.getSubtaskById(subtask2.getId());
-        inMemoryTaskManager.getEpicById(epic2.getId());
-        inMemoryTaskManager.getSubtaskById(subtask3.getId());
-        inMemoryTaskManager.getTaskById(task6.getId());
-        assertEquals(10, inMemoryTaskManager.getHistory().size());
-    }
-
-    @Test
-    void oldestTaskInHistoryWillChangeIfAddMoreThan10Tasks(){
-        Task task1 = inMemoryTaskManager.createTask(new Task("Сделать чай", "Необходимо сделать зеленый чай", 1));
-        Task task2 = inMemoryTaskManager.createTask(new Task("Съездить за покупками", "Купить подарки к НГ", 2));
-        Task task3 = inMemoryTaskManager.createTask(new Task("Приготовить обед", "Сварить суп", 3));
-        Task task4 = inMemoryTaskManager.createTask(new Task("Съездить на работу", "Забрать бумаги", 4));
-        Task task5 = inMemoryTaskManager.createTask(new Task("Приготовить ужин", "Хаказать доставку", 5));
-        Task task6 = inMemoryTaskManager.createTask(new Task("Постирать белье", "Постирать постельное", 6));
-
-
-        Epic epic1 = inMemoryTaskManager.createEpic(new Epic("Переезд в новый дом", "Спланировать переезд в новый дом", 1));
-        Subtask subtask1 = inMemoryTaskManager.createSubtask(new Subtask("Упаковка вещи",
-                "Упаковать вещи в коробки, хрупкие вещи в пленку", 1, epic1.getId()));
-        Subtask subtask2 =  inMemoryTaskManager.createSubtask(new Subtask("Арендовать грузовик для перевозки вещей",
-                "Позвонить в транспортные компании, узнать цены, заказать машину", 2, epic1.getId()));
-
-        Epic epic2 = inMemoryTaskManager.createEpic(new Epic("Приготовить торт", "Приготовить торт по рецепту.", 2));
-        Subtask subtask3 = inMemoryTaskManager.createSubtask(new Subtask("Купить продукты по рецепту",
-                "Сходить за продуктами", 1, epic2.getId()));
-        inMemoryTaskManager.getTaskById(task1.getId());
-        inMemoryTaskManager.getTaskById(task2.getId());
-        inMemoryTaskManager.getTaskById(task3.getId());
-        inMemoryTaskManager.getTaskById(task4.getId());
-        inMemoryTaskManager.getTaskById(task5.getId());
-        inMemoryTaskManager.getEpicById(epic1.getId());
-        inMemoryTaskManager.getSubtaskById(subtask1.getId());
-        inMemoryTaskManager.getSubtaskById(subtask2.getId());
-        inMemoryTaskManager.getEpicById(epic2.getId());
-        inMemoryTaskManager.getSubtaskById(subtask3.getId());
-        inMemoryTaskManager.getTaskById(task6.getId());
-        assertTrue(inMemoryTaskManager.getHistory().contains(task6));
-        assertFalse(inMemoryTaskManager.getHistory().contains(task1));
-    }
 
 
 
