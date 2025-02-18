@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 import ru.yandex.javacource.pasechnyuk.schedule.task.Epic;
 import ru.yandex.javacource.pasechnyuk.schedule.task.Subtask;
 import ru.yandex.javacource.pasechnyuk.schedule.task.Task;
-import ru.yandex.javacource.pasechnyuk.schedule.task.TaskStatus;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class InMemoryHistoryManagerTest {
 
@@ -51,6 +51,38 @@ class InMemoryHistoryManagerTest {
         assertEquals(task1.getDescription(), historyTask.getDescription(), "Описание задачи в истории изменилось");
         assertEquals(task1.getStatus(), historyTask.getStatus(), "Статус задачи в истории изменился");
         assertEquals(task1.getId(), historyTask.getId(), "ID задачи в истории изменился");
+    }
+    @Test
+    void fistTaskWillbeDeletedIfItWillGetSecondTime(){
+        Task task1 = inMemoryTaskManager.createTask(new Task("Сделать чай", "Необходимо сделать зеленый чай", 1));
+        Task task2 = inMemoryTaskManager.createTask(new Task("Съездить за покупками", "Купить подарки к НГ", 2));
+        Task task3 = inMemoryTaskManager.createTask(new Task("Приготовить обед", "Сварить суп", 3));
+
+        inMemoryTaskManager.getTaskById(task1.getId());
+        inMemoryTaskManager.getTaskById(task2.getId());
+        inMemoryTaskManager.getTaskById(task3.getId());
+        int size1 = inMemoryTaskManager.getHistory().size();
+        inMemoryTaskManager.getTaskById(task2.getId());
+        int size2 = inMemoryTaskManager.getHistory().size();
+
+        System.out.println(inMemoryTaskManager.getHistory());
+        assertTrue(size1 == size2);
+    }
+
+    @Test
+    void TaskWhichWasGetSecondTimeWasAddedTotheEnd(){
+        Task task1 = inMemoryTaskManager.createTask(new Task("Сделать чай", "Необходимо сделать зеленый чай", 1));
+        Task task2 = inMemoryTaskManager.createTask(new Task("Съездить за покупками", "Купить подарки к НГ", 2));
+        Task task3 = inMemoryTaskManager.createTask(new Task("Приготовить обед", "Сварить суп", 3));
+
+        inMemoryTaskManager.getTaskById(task1.getId());
+        inMemoryTaskManager.getTaskById(task2.getId());
+        inMemoryTaskManager.getTaskById(task3.getId());
+        inMemoryTaskManager.getTaskById(task1.getId());
+
+        System.out.println(inMemoryTaskManager.getHistory());
+        assertEquals(inMemoryTaskManager.getTaskById(task1.getId()), inMemoryTaskManager.getHistory().getLast());
+
     }
 
 
