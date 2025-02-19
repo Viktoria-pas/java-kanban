@@ -215,7 +215,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
             throw new ManagerSaveException("Ошибка при чтении задач из файла", e);
         }
     }
+
     public static void main(String[] args) throws IOException {
+
         File file = File.createTempFile("test", ".csv");
 
         FileBackedTaskManager manager1 = new FileBackedTaskManager(file);
@@ -223,12 +225,12 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
         Epic epic = manager1.createEpic(new Epic("Epic 1", "Description Epic 1", 2));
         Subtask subtask = manager1.createSubtask(new Subtask("Subtask 1", "Description Subtask 1", 3, epic.getId()));
 
-        FileBackedTaskManager manager2 =FileBackedTaskManager.loadFromFile(file);
+        FileBackedTaskManager manager2 = FileBackedTaskManager.loadFromFile(file);
         System.out.println(manager1.getTaskById(task.getId()).equals(manager2.getTaskById(task.getId())));
         System.out.println(manager1.getEpicById(epic.getId()).equals(manager2.getEpicById(epic.getId())));
         System.out.println(manager1.getSubtaskById(subtask.getId()).equals(manager2.getSubtaskById(subtask.getId())));
-        System.out.println("Менеджер 1: "+ manager1.toString(manager1.getTaskById(task.getId())));
-        System.out.println("Менеджер 2: "+manager2.toString(manager2.getTaskById(task.getId())));
+        System.out.println("Менеджер 1: " + manager1.toString(manager1.getTaskById(task.getId())));
+        System.out.println("Менеджер 2: " + manager2.toString(manager2.getTaskById(task.getId())));
 
     }
 
