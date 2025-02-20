@@ -23,8 +23,7 @@ class FileBackedTaskManagerTest {
 
         FileBackedTaskManager manager = new FileBackedTaskManager(file);
 
-        FileBackedTaskManager loadedManager = new FileBackedTaskManager(file);
-        loadedManager.loadFromFile(file);
+        FileBackedTaskManager loadedManager = manager.loadFromFile(file);
 
         assertTrue(loadedManager.getTasks().isEmpty(), "Список задач должен быть пустым");
         assertTrue(loadedManager.getEpics().isEmpty(), "Список эпиков должен быть пустым");
@@ -40,7 +39,7 @@ class FileBackedTaskManagerTest {
         Epic epic = manager.createEpic(new Epic("Epic 1", "Description Epic 1", 2));
         Subtask subtask = manager.createSubtask(new Subtask("Subtask 1", "Description Subtask 1", 3, epic.getId()));
 
-        FileBackedTaskManager manager2 =FileBackedTaskManager.loadFromFile(file);
+        FileBackedTaskManager manager2 = FileBackedTaskManager.loadFromFile(file);
 
         assertEquals(1, manager2.getTasks().size());
         assertEquals(1, manager2.getEpics().size());
@@ -99,7 +98,6 @@ class FileBackedTaskManagerTest {
         Epic epic = manager.createEpic(new Epic("Epic 1", "Description Epic 1", 2));
         Subtask subtask = manager.createSubtask(new Subtask("Subtask 1", "Description Subtask 1", 3, epic.getId()));
 
-        manager.save();
         try (BufferedReader br = new BufferedReader(new FileReader(file, StandardCharsets.UTF_8))) {
             String header = br.readLine();
             assertEquals("id,type,name,status,description,epic", header, "Заголовок CSV должен совпадать");

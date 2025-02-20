@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
 
-    private int currentId = 0;
+    protected int currentId = 0;
     protected final Map<Integer, Task> tasks = new HashMap<>();
     protected final Map<Integer, Epic> epics = new HashMap<>();
     protected final Map<Integer, Subtask> subtasks = new HashMap<>();
@@ -236,7 +236,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    private int generateId() {
+    protected int generateId() {
         return ++currentId;
     }
 
