@@ -4,6 +4,9 @@ import ru.yandex.javacource.pasechnyuk.schedule.manager.*;
 import ru.yandex.javacource.pasechnyuk.schedule.task.Epic;
 import ru.yandex.javacource.pasechnyuk.schedule.task.Subtask;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -11,11 +14,14 @@ public class Main {
 
         Epic epic1 = inMemoryTaskManager.createEpic(new Epic("Переезд в новый дом", "Спланировать переезд в новый дом", 1));
         Subtask subtask1 = inMemoryTaskManager.createSubtask(new Subtask("Упаковка вещи",
-                "Упаковать вещи в коробки, хрупкие вещи в пленку", 2, epic1.getId()));
+                "Упаковать вещи в коробки, хрупкие вещи в пленку", 2, epic1.getId(),
+                LocalDateTime.of(2025, 5, 2, 10,0), Duration.ofMinutes(60)));
         Subtask subtask2 = inMemoryTaskManager.createSubtask(new Subtask("Арендовать грузовик для перевозки вещей",
-                "Позвонить в транспортные компании, узнать цены, заказать машину", 2, epic1.getId()));
+                "Позвонить в транспортные компании, узнать цены, заказать машину", 2, epic1.getId(),
+                LocalDateTime.of(2025, 5, 2, 10,0), Duration.ofMinutes(60)));
         Subtask subtask3 = inMemoryTaskManager.createSubtask(new Subtask("Разгрузить грузовик",
-                "Дождаться грузовига в новом доме", 3, epic1.getId()));
+                "Дождаться грузовига в новом доме", 3, epic1.getId(),
+                LocalDateTime.of(2025, 5, 2, 10,0), Duration.ofMinutes(60)));
 
         Epic epic2 = inMemoryTaskManager.createEpic(new Epic("Приготовить торт", "Приготовить торт по рецепту.", 2));
 

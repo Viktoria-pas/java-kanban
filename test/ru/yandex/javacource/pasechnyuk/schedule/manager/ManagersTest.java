@@ -11,7 +11,6 @@ class ManagersTest {
         TaskManager taskManager = Managers.getDefault();
         assertNotNull(taskManager, "Объект taskManager не создался ");
     }
-    
 
     @Test
     void getDefaultHistory() {

@@ -18,7 +18,7 @@ public class InMemoryHistoryManager<T extends Task> implements HistoryManager<T>
         if (task == null) {
             return;
         }
-            remove(task.getId());
+        remove(task.getId());
 
         Node<T> newNode = new Node<>(tail, task, null);
         addLast(newNode);
