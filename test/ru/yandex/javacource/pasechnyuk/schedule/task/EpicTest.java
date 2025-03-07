@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 import ru.yandex.javacource.pasechnyuk.schedule.manager.Managers;
 import ru.yandex.javacource.pasechnyuk.schedule.manager.TaskManager;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class EpicTest {
@@ -21,10 +24,12 @@ class EpicTest {
                 "Спланировать переезд в новый дом", 1));
         assertNotNull(epic1, "Эпик не был создан");
         subtask1 = inMemoryTaskManager.createSubtask(new Subtask("Упаковка вещи",
-                "Упаковать вещи в коробки, хрупкие вещи в пленку", 5, epic1.getId()));
+                "Упаковать вещи в коробки, хрупкие вещи в пленку", 5, epic1.getId(),
+                LocalDateTime.of(2025, 5, 2, 10, 0), Duration.ofMinutes(90)));
         assertNotNull(subtask1, "Эпик не был создан");
         subtask2 = inMemoryTaskManager.createSubtask(new Subtask("Арендовать грузовик для перевозки вещей",
-                "Позвонить в транспортные компании, узнать цены, заказать машину", 6, epic1.getId()));
+                "Позвонить в транспортные компании, узнать цены, заказать машину", 6, epic1.getId(),
+                LocalDateTime.of(2025, 5, 3, 6, 0), Duration.ofMinutes(60)));
         assertNotNull(subtask2, "Эпик не был создан");
     }
 
@@ -124,6 +129,7 @@ class EpicTest {
         assertFalse(epic1.getSubtaskIds().contains(epic1.getId()),
                 "Эпик не должен содержать свой собственный ID в списке подзадач");
     }
+
     @Test
     void epicDoesNotHasSubtaskIdWhichWasDeleted() {
         epic1.removeSubtaskId(subtask1.getId());

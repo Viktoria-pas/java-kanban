@@ -6,7 +6,7 @@ public class Epic extends Task {
     protected ArrayList<Integer> subtaskIds;
 
     public Epic(String name, String description, int id) {
-        super(name, description, id);
+        super(name, description, id, null, null);
         subtaskIds = new ArrayList<>();
     }
 
@@ -35,6 +35,7 @@ public class Epic extends Task {
     public void removeSubtaskId(int id) {
         subtaskIds.remove((Integer) id);
     }
+
 
     @Override
     public String toString() {
