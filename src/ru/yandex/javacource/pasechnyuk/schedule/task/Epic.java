@@ -1,13 +1,19 @@
 package ru.yandex.javacource.pasechnyuk.schedule.task;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Epic extends Task {
     protected ArrayList<Integer> subtaskIds;
+    private LocalDateTime endTime;
 
     public Epic(String name, String description, int id) {
         super(name, description, id, null, null);
         subtaskIds = new ArrayList<>();
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 
     public TaskType getTaskType() {
@@ -34,6 +40,11 @@ public class Epic extends Task {
 
     public void removeSubtaskId(int id) {
         subtaskIds.remove((Integer) id);
+    }
+
+
+    public LocalDateTime getEndTime() {
+        return this.endTime;
     }
 
 

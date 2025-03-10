@@ -145,4 +145,12 @@ class EpicTest {
 
     }
 
+    @Test
+    void getEpicEndTime() {
+        inMemoryTaskManager.updateEpic(epic1);
+        LocalDateTime expectedEndTime = LocalDateTime.of(2025, 5, 3, 7, 0);
+        assertEquals(expectedEndTime, epic1.getEndTime(), "Время окончания эпика рассчитано неверно!");
+
+    }
+
 }

@@ -144,6 +144,7 @@ public class InMemoryTaskManager implements TaskManager {
         epic.setSubtaskIds(savedEpic.getSubtaskIds());
         epic.setStatus(savedEpic.getStatus());
         epics.put(epic.getId(), epic);
+        updateEpicTime(epic);
     }
 
     @Override
@@ -163,7 +164,7 @@ public class InMemoryTaskManager implements TaskManager {
         updateEpicStatus(epic);
     }
 
-    public void updateEpicTime(Epic epic) {
+    private void updateEpicTime(Epic epic) {
         if (epic.getSubtaskIds().isEmpty()) {
             epic.setStartTime(null);
             epic.setDuration(null);
@@ -187,6 +188,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (earliestStart.isPresent() && latestEnd.isPresent()) {
             epic.setStartTime(earliestStart.get());
             epic.setDuration(Duration.between(earliestStart.get(), latestEnd.get()));
+            epic.setEndTime(latestEnd.get());
         } else {
             epic.setStartTime(null);
             epic.setDuration(null);
@@ -196,8 +198,11 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteTaskById(int id) {
-        tasks.remove(id);
-        historyManager.remove(id);
+        Task task = tasks.remove(id);
+        if (task != null) {
+            prioritizedTasks.remove(task);
+            historyManager.remove(id);
+        }
     }
 
     @Override
@@ -220,6 +225,7 @@ public class InMemoryTaskManager implements TaskManager {
             return;
         }
         historyManager.remove(id);
+        prioritizedTasks.remove(subtask);
         Epic epic = epics.get(subtask.getEpicId());
         epic.removeSubtaskId(id);
         updateEpicStatus(epic);
@@ -257,19 +263,6 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public List<Task> getPrioritizedTasks() {
-        TreeSet<Task> prioritizedTasks = new TreeSet<>(
-                Comparator.comparing(Task::getStartTime, Comparator.nullsLast(Comparator.naturalOrder()))
-                        .thenComparing(Task::getId)
-        );
-
-        tasks.values().stream()
-                .filter(task -> task.getStartTime() != null)
-                .forEach(prioritizedTasks::add);
-
-        subtasks.values().stream()
-                .filter(subtask -> subtask.getStartTime() != null)
-                .forEach(prioritizedTasks::add);
-
         return new ArrayList<>(prioritizedTasks);
     }
 
@@ -278,28 +271,33 @@ public class InMemoryTaskManager implements TaskManager {
             return;
         }
 
-        boolean hasOverlap = getPrioritizedTasks().stream()
+        getPrioritizedTasks().stream()
                 .filter(existingTask -> !existingTask.equals(newTask))
                 .filter(existingTask -> existingTask.getStartTime() != null)
-                .anyMatch(existingTask -> isOnlyOneTaskInTime(newTask, existingTask));
-
-        if (hasOverlap) {
-            throw new IllegalArgumentException("Задача пересекается по времени с существующей задачей или подзадачей.");
-        }
+                .forEach(existingTask -> checkIntersection(newTask, existingTask));
+        prioritizedTasks.add(newTask);
     }
 
-    protected boolean isOnlyOneTaskInTime(Task task1, Task task2) {
+    private void checkIntersection(Task task1, Task task2) {
         if (task1.getStartTime() == null || task1.getEndTime() == null ||
                 task2.getStartTime() == null || task2.getEndTime() == null) {
-            return false;
+            return;
         }
-        return task1.getStartTime().isBefore(task2.getEndTime()) &&
+        boolean isIntersected = task1.getStartTime().isBefore(task2.getEndTime()) &&
                 task2.getStartTime().isBefore(task1.getEndTime());
+        if (isIntersected) {
+            throw new IllegalArgumentException("Задача пересекается по времени с существующей задачей или подзадачей.");
+        }
     }
 
     protected int generateId() {
         return ++currentId;
     }
+
+    private final TreeSet<Task> prioritizedTasks = new TreeSet<>(
+            Comparator.comparing(Task::getStartTime, Comparator.nullsLast(Comparator.naturalOrder()))
+                    .thenComparing(Task::getId)
+    );
 
 
 }
