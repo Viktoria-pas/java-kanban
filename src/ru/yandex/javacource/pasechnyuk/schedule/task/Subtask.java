@@ -1,10 +1,11 @@
 package ru.yandex.javacource.pasechnyuk.schedule.task;
+import java.time.*;
 
 public class Subtask extends Task {
     private int epicId;
 
-    public Subtask(String name, String description, int id, int epicId) {
-        super(name, description, id);
+    public Subtask(String name, String description, int id, int epicId, LocalDateTime startTime, Duration duration) {
+        super(name, description, id, startTime, duration);
         this.epicId = epicId;
     }
 
@@ -24,6 +25,8 @@ public class Subtask extends Task {
     public String toString() {
         return "Subtask{" + "name=" + getName() + ", description=" + getDescription() + ", id=" + getId() +
                 ", status=" + getStatus() +
+                ", duration=" + getDuration() +
+                ", startTime=" + getStartTime() +
                 ", epicId=" + epicId +
                 '}';
     }
