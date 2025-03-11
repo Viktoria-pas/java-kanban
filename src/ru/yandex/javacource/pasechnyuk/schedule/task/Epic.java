@@ -12,10 +12,6 @@ public class Epic extends Task {
         subtaskIds = new ArrayList<>();
     }
 
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
     public TaskType getTaskType() {
         return TaskType.EPIC;
     }
@@ -45,6 +41,10 @@ public class Epic extends Task {
 
     public LocalDateTime getEndTime() {
         return this.endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 
 
