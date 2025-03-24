@@ -196,9 +196,8 @@ public abstract class TaskManagerTest<T extends TaskManager> {
     public void testDeleteTaskById() {
         Task task = new Task("Task 1", "Description 1", 1, LocalDateTime.now(), Duration.ofMinutes(30));
         taskManager.createTask(task);
-
         taskManager.deleteTaskById(1);
-        assertNull(taskManager.getTaskById(1));
+        assertTrue(taskManager.getTasks().isEmpty());
     }
 
     @Test
@@ -207,7 +206,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         taskManager.createEpic(epic);
 
         taskManager.deleteEpicById(1);
-        assertNull(taskManager.getEpicById(1));
+        assertTrue(taskManager.getEpics().isEmpty());
     }
 
     @Test
@@ -219,7 +218,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         taskManager.createSubtask(subtask);
 
         taskManager.deleteSubtaskById(2);
-        assertNull(taskManager.getSubtaskById(2));
+        assertTrue(taskManager.getSubtask().isEmpty());
     }
 
     @Test

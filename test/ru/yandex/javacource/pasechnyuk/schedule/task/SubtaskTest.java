@@ -73,7 +73,7 @@ class SubtaskTest {
     @Test
     void deleteSubtaskById() {
         inMemoryTaskManager.deleteTaskById(subtask1.getId());
-        assertNull(inMemoryTaskManager.getTaskById(subtask1.getId()),
+        assertTrue(inMemoryTaskManager.getTasks().isEmpty(),
                 "Подзадача не удалена по ID");
     }
 

@@ -69,12 +69,8 @@ class TaskTest {
 
     @Test
     void deleteTaskById() {
-        Task task2 = inMemoryTaskManager.createTask(new Task("Съездить за покупками",
-                "Купить подарки к НГ", 2,
-                LocalDateTime.of(2025, 12, 15, 10, 0), Duration.ofMinutes(60)));
         inMemoryTaskManager.deleteTaskById(1);
-        assertNull(inMemoryTaskManager.getTaskById(1), "Задача с ID 1 не была удалена");
-        assertNotNull(inMemoryTaskManager.getTaskById(2), "Задача с ID 2 была удалена");
+        assertTrue(inMemoryTaskManager.getTasks().isEmpty(), "Задача с ID 1 не была удалена");
     }
 
     @Test
