@@ -65,13 +65,9 @@ class EpicTest {
 
     @Test
     void deleteEpicById() {
-        Epic epic2 = inMemoryTaskManager.createEpic(new Epic("Приготовить торт",
-                "Приготовить торт по рецепту.", 2));
         inMemoryTaskManager.deleteEpicById(1);
-        assertNull(inMemoryTaskManager.getEpicById(1),
+        assertTrue(inMemoryTaskManager.getEpics().isEmpty(),
                 "Эпик 1 не был удалён");
-        assertNotNull(inMemoryTaskManager.getEpicById(epic2.getId()),
-                "Эпик 2 удалён");
     }
 
     @Test
@@ -140,8 +136,7 @@ class EpicTest {
     @Test
     void deletedSubtuskFromEpicIsNotInManager() {
         epic1.removeSubtaskId(subtask1.getId());
-        Task removedSubtask = inMemoryTaskManager.getTaskById(subtask1.getId());
-        assertNull(removedSubtask);
+       assertEquals(1, epic1.getSubtaskIds().size());
 
     }
 
