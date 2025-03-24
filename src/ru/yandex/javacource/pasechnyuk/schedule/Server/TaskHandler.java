@@ -25,16 +25,15 @@ public class TaskHandler extends BaseHttpHandler implements HttpHandler {
         String path = exchange.getRequestURI().getPath();
         String[] pathOfUrl = path.split("/");
 
-
         try {
             switch (method) {
-                case "GET":
+                case GET:
                     handleGetRequest(exchange, pathOfUrl); // GET запросы обрабатываются здесь
                     break;
-                case "POST":
+                case POST:
                     handlePostRequest(exchange, pathOfUrl); // POST запросы обрабатываются здесь
                     break;
-                case "DELETE":
+                case DELETE:
                     handleDeleteRequest(exchange, pathOfUrl);
                     break;
                 default:
@@ -44,7 +43,6 @@ public class TaskHandler extends BaseHttpHandler implements HttpHandler {
             handleException(exchange, e);
         }
     }
-
 
     private void handleGetRequest(HttpExchange exchange, String[] pathParts) throws IOException {
 
@@ -61,7 +59,6 @@ public class TaskHandler extends BaseHttpHandler implements HttpHandler {
             sendNotFound(exchange);
         }
     }
-
 
     private void handlePostRequest(HttpExchange exchange, String[] pathParts) throws IOException {
         InputStream inputStream = exchange.getRequestBody();
@@ -91,10 +88,7 @@ public class TaskHandler extends BaseHttpHandler implements HttpHandler {
             sendText(exchange, "Некорректный запрос", 400);
         }
     }
-
 }
-
-
 
 
 

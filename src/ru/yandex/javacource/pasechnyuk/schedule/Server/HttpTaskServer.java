@@ -50,11 +50,9 @@ public class HttpTaskServer {
         Epic epic = new Epic("Эпик", "Описание эпика", 0);
         taskManager.createEpic(epic);
 
-
         Subtask subtask = new Subtask("Подзадача", "Описание подзадачи", 0, epic.getId(),
                 LocalDateTime.now(), Duration.ofMinutes(30));
         taskManager.createSubtask(subtask);
-
 
         HttpTaskServer httpTaskServer = new HttpTaskServer(taskManager);
         httpTaskServer.start();

@@ -26,13 +26,13 @@ public class SubtaskHandler extends BaseHttpHandler implements HttpHandler {
 
         try {
             switch (method) {
-                case "GET":
+                case GET:
                     handleGetRequest(exchange, pathOfUrl); // GET запросы обрабатываются здесь
                     break;
-                case "POST":
+                case POST:
                     handlePostRequest(exchange, pathOfUrl); // POST запросы обрабатываются здесь
                     break;
-                case "DELETE":
+                case DELETE:
                     handleDeleteRequest(exchange, pathOfUrl);
                     break;
                 default:
@@ -58,7 +58,6 @@ public class SubtaskHandler extends BaseHttpHandler implements HttpHandler {
             sendNotFound(exchange);
         }
     }
-
 
     private void handlePostRequest(HttpExchange exchange, String[] pathParts) throws IOException {
         InputStream inputStream = exchange.getRequestBody();

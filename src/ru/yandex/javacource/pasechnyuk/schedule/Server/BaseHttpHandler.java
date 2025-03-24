@@ -17,6 +17,9 @@ import java.time.LocalDateTime;
 public class BaseHttpHandler {
     protected final TaskManager taskManager;
     protected final Gson gson;
+    protected static final String GET = "GET";
+    protected static final String POST = "POST";
+    protected static final String DELETE = "DELETE";
 
     public BaseHttpHandler(TaskManager taskManager, Gson gson) {
         this.taskManager = taskManager;
